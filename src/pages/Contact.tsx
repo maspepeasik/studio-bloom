@@ -30,7 +30,12 @@ export default function ContactPage() {
     }
 
     setLoading(true);
-    const { error } = await supabase.from("contact_messages").insert([result.data]);
+    const { error } = await supabase.from("contact_messages").insert([{
+      name: result.data.name,
+      email: result.data.email,
+      subject: result.data.subject || null,
+      message: result.data.message,
+    }]);
     setLoading(false);
 
     if (error) {
