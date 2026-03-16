@@ -37,10 +37,10 @@ export default function BlogPage() {
       <section className="section-padding">
         <div className="container-wide">
           <AnimatedSection>
-            <p className="text-sm font-medium text-accent tracking-wider uppercase mb-2">Blog</p>
-            <h1 className="font-heading text-4xl md:text-5xl font-bold mb-4">Articles & Thoughts</h1>
-            <p className="text-muted-foreground max-w-lg mb-8">
-              Writing about development, design, and the things I learn along the way.
+            <p className="font-mono text-xs text-primary tracking-wider uppercase mb-2">/var/log/blog</p>
+            <h1 className="font-heading text-3xl md:text-4xl font-bold mb-4">Blog<span className="text-primary animate-blink">_</span></h1>
+            <p className="text-muted-foreground max-w-lg mb-8 text-sm">
+              Notes on infrastructure, DevOps practices, Linux internals, and lessons from production.
             </p>
           </AnimatedSection>
 
@@ -50,15 +50,17 @@ export default function BlogPage() {
                 <Button
                   variant={selectedCategory === null ? "default" : "outline"}
                   size="sm"
+                  className="font-mono text-xs"
                   onClick={() => setSelectedCategory(null)}
                 >
-                  All
+                  *
                 </Button>
                 {categories.map((cat) => (
                   <Button
                     key={cat.id}
                     variant={selectedCategory === cat.id ? "default" : "outline"}
                     size="sm"
+                    className="font-mono text-xs"
                     onClick={() => setSelectedCategory(cat.id)}
                   >
                     {cat.name}
@@ -96,7 +98,9 @@ export default function BlogPage() {
           )}
 
           {!isLoading && posts?.length === 0 && (
-            <p className="text-center text-muted-foreground py-20">No posts yet. Check back soon!</p>
+            <p className="text-center text-muted-foreground py-20 font-mono text-sm">
+              <span className="text-primary">$</span> tail -f /var/log/blog → no entries yet
+            </p>
           )}
         </div>
       </section>
