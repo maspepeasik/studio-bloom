@@ -1,16 +1,16 @@
 import { ReactNode } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Terminal } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 
 const navLinks = [
-  { label: "Home", path: "/" },
-  { label: "About", path: "/about" },
-  { label: "Projects", path: "/projects" },
-  { label: "Blog", path: "/blog" },
-  { label: "Contact", path: "/contact" },
+  { label: "~", path: "/" },
+  { label: "/about", path: "/about" },
+  { label: "/projects", path: "/projects" },
+  { label: "/blog", path: "/blog" },
+  { label: "/contact", path: "/contact" },
 ];
 
 function PublicHeader() {
@@ -18,22 +18,23 @@ function PublicHeader() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
-      <div className="container-wide flex items-center justify-between h-16 px-6">
-        <Link to="/" className="font-heading text-xl font-bold tracking-tight">
-          Portfolio
+    <header className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-md border-b border-border">
+      <div className="container-wide flex items-center justify-between h-14 px-6">
+        <Link to="/" className="flex items-center gap-2 font-mono text-sm font-medium text-primary">
+          <Terminal className="h-4 w-4" />
+          <span className="glow-text">sysadmin@portfolio</span>
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className="hidden md:flex items-center gap-1">
           {navLinks.map((link) => (
             <Link
               key={link.path}
               to={link.path}
-              className={`text-sm font-medium transition-colors hover:text-foreground ${
+              className={`font-mono text-xs px-3 py-1.5 rounded transition-colors ${
                 location.pathname === link.path
-                  ? "text-foreground"
-                  : "text-muted-foreground"
+                  ? "text-primary bg-primary/10"
+                  : "text-muted-foreground hover:text-foreground"
               }`}
             >
               {link.label}
@@ -64,9 +65,9 @@ function PublicHeader() {
               key={link.path}
               to={link.path}
               onClick={() => setMobileOpen(false)}
-              className={`block py-2 text-sm font-medium transition-colors ${
+              className={`block py-2 font-mono text-sm transition-colors ${
                 location.pathname === link.path
-                  ? "text-foreground"
+                  ? "text-primary"
                   : "text-muted-foreground"
               }`}
             >
@@ -81,14 +82,14 @@ function PublicHeader() {
 
 function PublicFooter() {
   return (
-    <footer className="border-t border-border py-12 px-6">
+    <footer className="border-t border-border py-8 px-6">
       <div className="container-wide flex flex-col md:flex-row items-center justify-between gap-4">
-        <p className="text-sm text-muted-foreground">
-          © {new Date().getFullYear()} Portfolio. All rights reserved.
+        <p className="text-xs text-muted-foreground font-mono">
+          <span className="text-primary">$</span> echo "© {new Date().getFullYear()} — all systems nominal"
         </p>
         <div className="flex items-center gap-6">
-          <Link to="/admin" className="text-xs text-muted-foreground hover:text-foreground transition-colors">
-            Admin
+          <Link to="/admin" className="text-xs text-muted-foreground hover:text-primary transition-colors font-mono">
+            /admin
           </Link>
         </div>
       </div>
@@ -100,7 +101,7 @@ export default function PublicLayout({ children }: { children: ReactNode }) {
   return (
     <div className="min-h-screen flex flex-col">
       <PublicHeader />
-      <main className="flex-1 pt-16">
+      <main className="flex-1 pt-14">
         {children}
       </main>
       <PublicFooter />
